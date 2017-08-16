@@ -2,11 +2,12 @@
 
 Simple OGame bot, entering browser once per some fixed time, detecting materials/buildings/techs and creating new ones based on strategy.
 
-Instruction:
+# Instruction:
 
-1. Add new user using REST.
-Resource: /job/users
+### 1. Add new user using REST.
+Resource: **/job/users**
 Payload:
+```
 [
   {
     "username": "abc",
@@ -14,10 +15,12 @@ Payload:
     "universum": "s142-pl.ogame.gameforge.com"
   }
 ]
+```
 
-2. Set new timer using REST.
-Resource: /job/settings
+### 2. Set new timer using REST.
+Resource: **/job/settings**
 Payload:
+```
 [
   {
      "timer":"NEXT_JOB",
@@ -25,10 +28,12 @@ Payload:
      "interval":900000
   }
 ]
+```
 
-3. Set auto-expanding strategy for user using REST.
-Resource: /job/auto
+### 3. Set auto-expanding strategy for user using REST.
+Resource: **/job/auto**
 Payload:
+```
 [ 
   {
     "user": {
@@ -38,11 +43,13 @@ Payload:
     "active": "true"
   }
 ]
+```
 
 That's all. Now every specified interval the strategy will be executed.
 You can also manually execute strategy by invoking REST:
-Resource: /job/next
+Resource: **/job/next**
 Payload:
+```
 [ 
   {
     "user": {
@@ -51,3 +58,4 @@ Payload:
     "strategy": "QUICK_START"
   }
 ]
+```
