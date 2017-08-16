@@ -1,0 +1,39 @@
+buildscript {
+	ext {
+		springBootVersion = '1.5.6.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+}
+
+
+dependencies {
+	compile('org.springframework.boot:spring-boot-starter-web')
+	compile("org.springframework.boot:spring-boot-starter-data-jpa")
+	compile("com.h2database:h2")
+
+	runtime('org.springframework.boot:spring-boot-devtools')
+
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+
+	compile group: 'javax.inject', name: 'javax.inject', version: '1'
+	compile group: 'org.seleniumhq.selenium', name: 'selenium-chrome-driver', version: '3.4.0'
+	compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.4.0'
+	compile group: 'javax.enterprise', name: 'cdi-api', version: '2.0'
+	compile group: 'org.javatuples', name: 'javatuples', version: '1.2'
+}
