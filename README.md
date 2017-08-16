@@ -6,6 +6,7 @@ Simple OGame bot, entering browser once per some fixed time, detecting materials
 
 ### 1. Add new user using REST.
 Resource: **/job/users**
+
 Payload:
 ```
 [
@@ -19,6 +20,7 @@ Payload:
 
 ### 2. Set new timer using REST.
 Resource: **/job/settings**
+
 Payload:
 ```
 [
@@ -32,6 +34,7 @@ Payload:
 
 ### 3. Set auto-expanding strategy for user using REST.
 Resource: **/job/auto**
+
 Payload:
 ```
 [ 
@@ -48,6 +51,7 @@ Payload:
 That's all. Now every specified interval the strategy will be executed.
 You can also manually execute strategy by invoking REST:
 Resource: **/job/next**
+
 Payload:
 ```
 [ 
