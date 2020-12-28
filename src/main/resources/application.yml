@@ -1,0 +1,7 @@
+logging:
+  level:
+    root: debug
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update

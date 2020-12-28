@@ -1,8 +1,13 @@
 package com.matejko.model.common;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
 /**
  * Created by Mikołaj Matejko on 29.07.2017 as part of ogame-expander
  */
+@RequiredArgsConstructor
+@Getter
 public enum MaterialsEnum {
     METAL("resources_metal"),
     CRYSTAL("resources_crystal"),
@@ -10,13 +15,5 @@ public enum MaterialsEnum {
     DARK_MATTER("resources_darkmatter"),
     ENERGY("resources_energy");
 
-    private String resource;
-
-    MaterialsEnum(final String resource) {
-        this.resource = resource;
-    }
-
-    public String getResource() {
-        return resource;
-    }
+    private final String resource;
 }

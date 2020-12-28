@@ -1,8 +1,13 @@
 package com.matejko.model.common;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
 /**
  * Created by Mikołaj Matejko on 29.07.2017 as part of ogame-expander
  */
+@RequiredArgsConstructor
+@Getter
 public enum BuildingEnum {
     METAL_MINE(TabEnum.RESOURCES, "button1", "//*[@id=\"building\"]/li[@id='button1']//span[@class='level']"),
     CRYSTAL_MINE(TabEnum.RESOURCES, "button2", "//*[@id=\"building\"]/li[@id='button2']//span[@class='level']"),
@@ -38,24 +43,6 @@ public enum BuildingEnum {
     ARMOR_TECH(TabEnum.RESEARCH, "details111", "//a[@id='details111']");
 
     private final TabEnum type;
+    private final String id;
     private final String path;
-    private String id;
-
-    BuildingEnum(final TabEnum type, final String id, final String path) {
-        this.type = type;
-        this.id = id;
-        this.path = path;
-    }
-
-    public TabEnum getType() {
-        return type;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public String getId() {
-        return id;
-    }
 }

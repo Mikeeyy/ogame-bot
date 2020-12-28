@@ -1,5 +1,20 @@
 package com.matejko.service.impl;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Optional;
+import java.util.concurrent.TimeUnit;
+
+import javax.inject.Inject;
+import javax.inject.Named;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.annotation.Async;
+
 import com.matejko.exceptions.ServiceException;
 import com.matejko.model.common.TimerEnum;
 import com.matejko.model.entity.TimerSettings;
@@ -9,19 +24,6 @@ import com.matejko.scheduler.Timer;
 import com.matejko.service.interfaces.JobService;
 import com.matejko.service.interfaces.TimerService;
 import com.matejko.service.timers.TimerFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.scheduling.annotation.Async;
-
-import javax.inject.Inject;
-import javax.inject.Named;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Optional;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Mikołaj Matejko on 30.07.2017 as part of ogame-expander
@@ -52,7 +54,7 @@ public class TimerServiceImpl implements TimerService {
                 .filter(TimerSettings::getActive)
                 .ifPresent(settings -> {
                     Date nextInvocation = nextInvocationDate(settings.getLastInvocation(),
-                            settings.getInterval());
+                            settings.getTimerInterval());
                     if (nextInvocation.after(new Date())) {
                         logger.debug(String.format("Timer [%s] won't be invoked now, next invocation in [%s]",
                                 settings.getTimer().toString(), calculateNextInvocationInMinutes(nextInvocation)));
@@ -79,7 +81,7 @@ public class TimerServiceImpl implements TimerService {
         TimerSettings timerSettings = timerSettingsRepository.findByTimer(settingsReq.getTimer())
                 .map(settings -> {
                     Optional.ofNullable(settingsReq.getInterval())
-                            .ifPresent(settings::setInterval);
+                            .ifPresent(settings::setTimerInterval);
 
                     Optional.ofNullable(settingsReq.getActive())
                             .ifPresent(settings::setActive);
@@ -95,7 +97,7 @@ public class TimerServiceImpl implements TimerService {
     private TimerSettings createNewTimerSettings(final SettingsRequest settingsReq) {
         TimerSettings timerSettings = new TimerSettings();
         timerSettings.setTimer(settingsReq.getTimer());
-        timerSettings.setInterval(settingsReq.getInterval());
+        timerSettings.setTimerInterval(settingsReq.getInterval());
         timerSettings.setActive(settingsReq.getActive());
         timerSettings.setCreationDate(new Date());
         return timerSettings;

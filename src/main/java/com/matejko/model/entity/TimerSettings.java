@@ -1,9 +1,15 @@
 package com.matejko.model.entity;
 
-import com.matejko.model.common.TimerEnum;
-
-import javax.persistence.*;
 import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import com.matejko.model.common.TimerEnum;
 
 /**
  * Created by Mikołaj Matejko on 30.07.2017 as part of ogame-expander
@@ -11,7 +17,7 @@ import java.util.Date;
 @Entity
 public class TimerSettings extends BaseEntity {
     @Column(nullable = false)
-    private Long interval;
+    private Long timerInterval;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastInvocation;
@@ -23,12 +29,12 @@ public class TimerSettings extends BaseEntity {
     @Column(nullable = false)
     private Boolean active;
 
-    public Long getInterval() {
-        return interval;
+    public Long getTimerInterval() {
+        return timerInterval;
     }
 
-    public void setInterval(final Long interval) {
-        this.interval = interval;
+    public void setTimerInterval(final Long timerInterval) {
+        this.timerInterval = timerInterval;
     }
 
     public Date getLastInvocation() {

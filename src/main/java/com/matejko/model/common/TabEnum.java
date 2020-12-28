@@ -1,8 +1,13 @@
 package com.matejko.model.common;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
 /**
  * Created by Mikołaj Matejko on 29.07.2017 as part of ogame-expander
  */
+@RequiredArgsConstructor
+@Getter
 public enum TabEnum {
     OVERVIEW("overview"),
     RESOURCES("resources"),
@@ -16,13 +21,5 @@ public enum TabEnum {
     ALLIANCE("alliance"),
     SHOP("shop");
 
-    private String url;
-
-    TabEnum(final String url) {
-        this.url = url;
-    }
-
-    public String getUrl() {
-        return this.url;
-    }
+    private final String url;
 }
