@@ -1,16 +1,17 @@
 package com.matejko.service.impl;
 
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 import com.matejko.helper.PlanetVisitatorHelper;
+import com.matejko.model.common.OperatingSystem;
 import com.matejko.model.entity.Job;
 import com.matejko.model.entity.JobHistory;
 import com.matejko.model.standard.Building;
 import com.matejko.model.standard.DecryptedUser;
 import com.matejko.service.interfaces.OgameWebConnector;
-
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * Created by Mikołaj Matejko on 16.08.2017 as part of ogame-expander
@@ -20,11 +21,13 @@ public class NextJobExecutor extends ConnectionExecutor<OgameWebConnector, List<
     private final List<Job> jobsByStrategy;
     private final ChromeOgameWebConnector ogameWebConnector;
 
-    public NextJobExecutor(final DecryptedUser user, final List<Job> jobsByStrategy) {
+
+
+    public NextJobExecutor(final DecryptedUser user, final List<Job> jobsByStrategy, final OperatingSystem system) {
         this.user = user;
         this.jobsByStrategy = jobsByStrategy;
 
-        ogameWebConnector = new ChromeOgameWebConnector(user.getUniversum());
+        ogameWebConnector = new ChromeOgameWebConnector(user.getUniversum(), system);
     }
 
     @Override

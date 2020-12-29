@@ -1,7 +1,16 @@
 package com.matejko.service.impl;
 
+import java.util.Date;
+import java.util.List;
+
+import javax.inject.Named;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Async;
+
 import com.matejko.exceptions.RepositoryException;
 import com.matejko.exceptions.ServiceException;
+import com.matejko.model.common.OperatingSystem;
 import com.matejko.model.entity.AutoJob;
 import com.matejko.model.entity.Job;
 import com.matejko.model.entity.JobHistory;
@@ -16,12 +25,6 @@ import com.matejko.repository.interfaces.UserRepository;
 import com.matejko.service.interfaces.EncryptionService;
 import com.matejko.service.interfaces.Executor;
 import com.matejko.service.interfaces.JobService;
-import org.springframework.scheduling.annotation.Async;
-
-import javax.inject.Inject;
-import javax.inject.Named;
-import java.util.Date;
-import java.util.List;
 
 import lombok.RequiredArgsConstructor;
 
@@ -38,6 +41,9 @@ public class JobServiceImpl implements JobService {
     private final JobHistoryRepository jobHistoryRepository;
     private final EncryptionService encryptionService;
 
+    @Value("${system.operating}")
+    private OperatingSystem system;
+
     @Async
     @Override
     public void executeNextJob(final NextJobRequest job) throws ServiceException {
@@ -48,7 +54,7 @@ public class JobServiceImpl implements JobService {
             DecryptedUser decryptedUser = new DecryptedUser(user.getUsername(),
                     encryptionService.decrypt(user.getPassword()), user.getUniversum());
 
-            Executor<List<JobHistory>> executor = new NextJobExecutor(decryptedUser, jobsByStrategy);
+            Executor<List<JobHistory>> executor = new NextJobExecutor(decryptedUser, jobsByStrategy, system);
             executor.execute().forEach(f -> {
                 f.setUser(user);
 
