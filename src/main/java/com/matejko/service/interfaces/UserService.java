@@ -9,4 +9,6 @@ import java.util.List;
  */
 public interface UserService {
     void save(List<UserRequest> users);
+
+    void remove(String name);
 }

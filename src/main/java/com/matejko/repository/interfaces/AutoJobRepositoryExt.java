@@ -2,6 +2,7 @@ package com.matejko.repository.interfaces;
 
 import com.matejko.model.entity.AutoJob;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -9,4 +10,6 @@ import java.util.Optional;
  */
 public interface AutoJobRepositoryExt {
     Optional<AutoJob> findByUsernameAndStrategy(String username, String strategy);
+
+    List<AutoJob> findByUsername(String name);
 }

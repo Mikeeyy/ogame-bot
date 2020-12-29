@@ -23,10 +23,13 @@ import javax.inject.Named;
 import java.util.Date;
 import java.util.List;
 
+import lombok.RequiredArgsConstructor;
+
 /**
  * Created by Mikołaj Matejko on 29.07.2017 as part of ogame-expander
  */
 @Named
+@RequiredArgsConstructor
 public class JobServiceImpl implements JobService {
 
     private final JobRepository jobRepository;
@@ -34,19 +37,6 @@ public class JobServiceImpl implements JobService {
     private final AutoJobRepository autoJobRepository;
     private final JobHistoryRepository jobHistoryRepository;
     private final EncryptionService encryptionService;
-
-    @Inject
-    public JobServiceImpl(final JobRepository jobRepository,
-                          final UserRepository userRepository,
-                          final AutoJobRepository autoJobRepository,
-                          final JobHistoryRepository jobHistoryRepository,
-                          final EncryptionService encryptionService) {
-        this.jobRepository = jobRepository;
-        this.userRepository = userRepository;
-        this.autoJobRepository = autoJobRepository;
-        this.jobHistoryRepository = jobHistoryRepository;
-        this.encryptionService = encryptionService;
-    }
 
     @Async
     @Override
@@ -92,5 +82,11 @@ public class JobServiceImpl implements JobService {
                 .findByUsername(job.getUser().getUsername())
                 .orElseThrow(() -> new ServiceException(String.format("User [%s] has not been found", job.getUser().getUsername()))));
         return newJob;
+    }
+
+    @Override
+    public void removeByUsername(final String name) {
+        autoJobRepository.findByUsername(name)
+                .forEach(autoJobRepository::delete);
     }
 }

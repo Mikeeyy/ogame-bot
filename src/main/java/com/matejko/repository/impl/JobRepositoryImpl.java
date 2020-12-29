@@ -21,7 +21,7 @@ import java.util.stream.Stream;
 public class JobRepositoryImpl implements JobRepository {
     @Override
     public List<Job> getJobsByStrategy(final String strategy) throws RepositoryException {
-        try (Stream<String> stream = Files.lines(Paths.get(String.format("src\\main\\resources\\strategies\\%s.strategy", strategy)))) {
+        try (Stream<String> stream = Files.lines(Paths.get(String.format("src/main/resources/strategies/%s.strategy", strategy)))) {
             return stream
                     .map(this::parseJobLine)
                     .sorted(Comparator.comparing(Job::getOrderId))

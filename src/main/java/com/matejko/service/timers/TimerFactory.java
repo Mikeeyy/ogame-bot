@@ -8,18 +8,16 @@ import javax.inject.Named;
 import java.util.List;
 import java.util.Objects;
 
+import lombok.RequiredArgsConstructor;
+
 /**
  * Created by Mikołaj Matejko on 31.07.2017 as part of ogame-expander
  */
 @Named
+@RequiredArgsConstructor
 public class TimerFactory {
 
     private final List<TimerExecutor> executors;
-
-    @Inject
-    public TimerFactory(final List<TimerExecutor> executors) {
-        this.executors = executors;
-    }
 
     public TimerExecutor getTimerExecutor(TimerEnum timer) {
         return executors.stream()

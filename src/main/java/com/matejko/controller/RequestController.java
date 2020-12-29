@@ -2,6 +2,7 @@ package com.matejko.controller;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -44,6 +45,12 @@ public class RequestController {
     @RequestMapping(value = "/users", method = RequestMethod.POST, consumes = "application/json")
     public void setUsers(@RequestBody final List<UserRequest> users) throws ServiceException {
         userService.save(users);
+    }
+
+    @RequestMapping(value = "/users/remove/{name}", method = RequestMethod.POST, consumes = "application/json")
+    public void removeUsers(@PathVariable final String name) throws ServiceException {
+        jobService.removeByUsername(name);
+        userService.remove(name);
     }
 
     @RequestMapping(value = "/auto", method = RequestMethod.POST, consumes = "application/json")

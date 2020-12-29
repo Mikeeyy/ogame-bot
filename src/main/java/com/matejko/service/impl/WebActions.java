@@ -10,17 +10,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Created by Mikołaj Matejko on 29.07.2017 as part of ogame-expander
  */
+@Slf4j
 public class WebActions {
-    private static final Logger logger = LoggerFactory.getLogger(WebActions.class);
-
     public final WebDriver webDriver;
-    private String mainUrl;
+    private final String mainUrl;
 
     public WebActions(final WebDriver webDriver, final String mainUrl) {
         this.webDriver = webDriver;
@@ -32,23 +35,27 @@ public class WebActions {
     }
 
     private String urlWithoutUniversum() {
-        Pattern pattern = Pattern.compile("(https://)(s[0-9]+\\-)(.*)");
+        Pattern pattern = Pattern.compile("(https://)(s[0-9]+-)(.*)");
         Matcher matcher = pattern.matcher(mainUrl);
         matcher.find();
         return matcher.group(1) + matcher.group(3);
     }
 
+    public void clickSpan(final String id) {
+        webDriver.findElement(By.xpath("//span[contains(text(),'%s')]".formatted(id))).click();
+    }
+
     public void clickButton(final String id) {
-        webDriver.findElement(By.id(id)).click();
+        webDriver.findElement(By.xpath(id)).click();
     }
 
     public void submit(final String id) {
         WebElement button = webDriver.findElement(By.id(id));
-        button.click();
+        button.submit();
     }
 
     public void setTextBox(String id, String value) {
-        WebElement textBox = webDriver.findElement(By.id(id));
+        WebElement textBox = webDriver.findElement(By.name(id));
         textBox.sendKeys(value);
     }
 
@@ -58,7 +65,7 @@ public class WebActions {
     }
 
     public void goToTab(final TabEnum tab) {
-        webDriver.get(String.format("%s/game/index.php?page=%s", mainUrl, tab.getUrl()));
+        webDriver.get(String.format("%s/game/index.php?page=ingame&component=%s", mainUrl, tab.getUrl()));
     }
 
     public boolean clickBuildButton(final String expression) {
@@ -76,7 +83,7 @@ public class WebActions {
         try {
             Thread.sleep(timeout);
         } catch (InterruptedException e) {
-            logger.error("sleep", e);
+            log.error("sleep", e);
         }
     }
 
@@ -87,5 +94,15 @@ public class WebActions {
                     js.executeScript(
                             "arguments[0].parentNode.removeChild(arguments[0])", f);
                 });
+    }
+
+    public void switchWindows() {
+        final var windowHandles = webDriver.getWindowHandles();
+        final var currentWindowHandle = webDriver.getWindowHandle();
+
+        windowHandles.stream()
+                .filter(window -> !Objects.equals(window, currentWindowHandle))
+                .findFirst()
+                .ifPresent(window -> webDriver.switchTo().window(window));
     }
 }

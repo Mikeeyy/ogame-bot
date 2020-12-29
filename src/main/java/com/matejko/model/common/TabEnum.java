@@ -10,13 +10,13 @@ import lombok.RequiredArgsConstructor;
 @Getter
 public enum TabEnum {
     OVERVIEW("overview"),
-    RESOURCES("resources"),
-    STATION("station"),
+    RESOURCES("supplies"),
+    STATION("facilities"),
     TRADER_OVERVIEW("traderOverview"),
     RESEARCH("research"),
     SHIPYARD("shipyard"),
-    DEFENSE("defense"),
-    FLEET1("fleet1"),
+    DEFENSE("defenses"),
+    FLEET1("fleetdispatch"),
     GALAXY("galaxy"),
     ALLIANCE("alliance"),
     SHOP("shop");

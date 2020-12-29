@@ -13,7 +13,7 @@ public class ChromeOgameWebConnector extends BaseOgameWebConnector {
 
     @Override
     protected WebDriver webDriver() {
-        System.setProperty("webdriver.chrome.driver", "src\\main\\resources\\drivers\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "src/main/resources/drivers/chromedriver");
         return new ChromeDriver();
     }
 }

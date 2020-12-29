@@ -32,11 +32,14 @@ public abstract class BaseOgameWebConnector implements OgameWebConnector {
     public void logIn(final DecryptedUser user) {
         webActions.goToHomePage();
         webActions.closePopup("openX_interstitial");
-        webActions.clickButton("loginBtn");
-        webActions.setTextBox("usernameLogin", user.getUsername());
-        webActions.setTextBox("passwordLogin", user.getPassword());
-        webActions.setSelectBox("serverLogin", user.getUniversum());
-        webActions.submit("loginSubmit");
+        webActions.sleep(2000);
+        webActions.clickSpan("Login");
+        webActions.setTextBox("email", user.getUsername());
+        webActions.setTextBox("password", user.getPassword());
+        webActions.submit("loginForm");
+        webActions.sleep(2000);
+        webActions.clickSpan("Ostatnia gra");
+        webActions.switchWindows();
     }
 
     @Override
@@ -70,15 +73,19 @@ public abstract class BaseOgameWebConnector implements OgameWebConnector {
     public boolean build(final BuildingEnum buildingEnum) {
         webActions.goToTab(buildingEnum.getType());
 
-        webActions.clickButton(buildingEnum.getId());
+        webActions.clickButton(buildingEnum.getPath());
         webActions.sleep(5000);
 
-        return webActions.clickBuildButton("//*[@id='content']/div[@class='build-it_wrap']/a[@class='build-it']");
+        final var clicked = webActions.clickBuildButton("//*[@class='content']//*[@class='build-it_wrap']/button[@class='upgrade']");
+
+        webActions.sleep(1500);
+
+        return clicked;
     }
 
     @Override
     public void close() {
-        webDriver.close();
+        webDriver.quit();
     }
 
     private Materials collectMaterials() {

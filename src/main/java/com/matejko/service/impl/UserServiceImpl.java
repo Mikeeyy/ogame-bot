@@ -12,21 +12,17 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import lombok.RequiredArgsConstructor;
+
 /**
  * Created by Mikołaj Matejko on 30.07.2017 as part of ogame-expander
  */
 @Named
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final EncryptionService encryptionService;
-
-    @Inject
-    public UserServiceImpl(final UserRepository userRepository,
-                           final EncryptionService encryptionService) {
-        this.userRepository = userRepository;
-        this.encryptionService = encryptionService;
-    }
 
     @Override
     public void save(final List<UserRequest> users) {
@@ -57,5 +53,11 @@ public class UserServiceImpl implements UserService {
         user.setUniversum(userRequest.getUniversum());
         user.setCreationDate(new Date());
         return user;
+    }
+
+    @Override
+    public void remove(final String name) {
+        userRepository.findByUsername(name)
+                .ifPresent(userRepository::delete);
     }
 }

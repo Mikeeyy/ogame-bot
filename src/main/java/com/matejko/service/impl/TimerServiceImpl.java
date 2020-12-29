@@ -25,25 +25,19 @@ import com.matejko.service.interfaces.JobService;
 import com.matejko.service.interfaces.TimerService;
 import com.matejko.service.timers.TimerFactory;
 
+import lombok.RequiredArgsConstructor;
+
 /**
  * Created by Mikołaj Matejko on 30.07.2017 as part of ogame-expander
  */
 @Named
+@RequiredArgsConstructor
 public class TimerServiceImpl implements TimerService {
     private static final Logger logger = LoggerFactory.getLogger(Timer.class);
 
     private final JobService jobService;
     private final TimerSettingsRepository timerSettingsRepository;
     private final TimerFactory timerFactory;
-
-    @Inject
-    public TimerServiceImpl(final JobService jobService,
-                            final TimerSettingsRepository timerSettingsRepository,
-                            final TimerFactory timerFactory) {
-        this.jobService = jobService;
-        this.timerSettingsRepository = timerSettingsRepository;
-        this.timerFactory = timerFactory;
-    }
 
     @Async
     @Override

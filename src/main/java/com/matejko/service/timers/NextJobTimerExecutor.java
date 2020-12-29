@@ -11,21 +11,17 @@ import com.matejko.service.interfaces.JobService;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import lombok.RequiredArgsConstructor;
+
 /**
  * Created by Mikołaj Matejko on 31.07.2017 as part of ogame-expander
  */
 @Named
+@RequiredArgsConstructor
 public class NextJobTimerExecutor implements TimerExecutor {
 
     private final AutoJobRepository autoJobRepository;
     private final JobService jobService;
-
-    @Inject
-    public NextJobTimerExecutor(final AutoJobRepository autoJobRepository,
-                                final JobService jobService) {
-        this.autoJobRepository = autoJobRepository;
-        this.jobService = jobService;
-    }
 
     @Override
     public TimerEnum enumValue() {
