@@ -13,6 +13,8 @@ import com.matejko.model.standard.Building;
 import com.matejko.model.standard.DecryptedUser;
 import com.matejko.service.interfaces.OgameWebConnector;
 
+import lombok.val;
+
 /**
  * Created by Mikołaj Matejko on 16.08.2017 as part of ogame-expander
  */
@@ -20,8 +22,6 @@ public class NextJobExecutor extends ConnectionExecutor<OgameWebConnector, List<
     private final DecryptedUser user;
     private final List<Job> jobsByStrategy;
     private final ChromeOgameWebConnector ogameWebConnector;
-
-
 
     public NextJobExecutor(final DecryptedUser user, final List<Job> jobsByStrategy, final OperatingSystem system) {
         this.user = user;
@@ -39,7 +39,7 @@ public class NextJobExecutor extends ConnectionExecutor<OgameWebConnector, List<
     protected List<JobHistory> action() {
         ogameWebConnector.logIn(user);
 
-        PlanetVisitatorHelper helper = new PlanetVisitatorHelper();
+        val helper = new PlanetVisitatorHelper();
 
         return ogameWebConnector.collectProfileData()
                 .getPlanets()
@@ -50,7 +50,7 @@ public class NextJobExecutor extends ConnectionExecutor<OgameWebConnector, List<
                     return findNextJob(jobsByStrategy, ogameWebConnector.collectBuildings())
                             .filter(f -> ogameWebConnector.build(f.getBuildingEnum()))
                             .map(f -> {
-                                JobHistory jobHistory = new JobHistory();
+                                val jobHistory = new JobHistory();
                                 jobHistory.setCreationDate(new Date());
                                 jobHistory.setBuildingEnum(f.getBuildingEnum());
                                 jobHistory.setLevel(f.getLevel());
@@ -67,7 +67,7 @@ public class NextJobExecutor extends ConnectionExecutor<OgameWebConnector, List<
 
 
     private Optional<Job> findNextJob(final List<Job> jobs, final List<Building> currentBuildings) {
-        for (final Job job : jobs) {
+        for (val job : jobs) {
             if (currentBuildings.stream()
                     .filter(f -> f.getBuildingEnum().equals(job.getBuildingEnum()))
                     .anyMatch(f -> f.getLevel() < job.getLevel()))
