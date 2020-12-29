@@ -47,7 +47,7 @@ public class RequestController {
         userService.save(users);
     }
 
-    @RequestMapping(value = "/users/remove/{name}", method = RequestMethod.POST, consumes = "application/json")
+    @RequestMapping(value = "/users/remove/{name}", method = RequestMethod.POST)
     public void removeUsers(@PathVariable final String name) throws ServiceException {
         jobService.removeByUsername(name);
         userService.remove(name);

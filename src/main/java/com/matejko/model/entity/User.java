@@ -1,9 +1,11 @@
 package com.matejko.model.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
 import java.util.HashSet;
 import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 
 /**
  * Created by Mikołaj Matejko on 29.07.2017 as part of ogame-expander
@@ -13,7 +15,7 @@ public class User extends BaseEntity {
     private String username;
     private String password;
     private String universum;
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<JobHistory> historicalJobs;
 
     public User() {

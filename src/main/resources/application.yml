@@ -11,6 +11,8 @@ spring:
     driverClassName: org.h2.Driver
     username: sa
     password: password
-
+  h2:
+    console:
+      enabled: true
 system:
   operating: MAC
