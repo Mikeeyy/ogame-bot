@@ -27,7 +27,8 @@ public class NextJobExecutor extends ConnectionExecutor<OgameWebConnector, List<
         this.user = user;
         this.jobsByStrategy = jobsByStrategy;
 
-        ogameWebConnector = new ChromeOgameWebConnector(user.getUniversum(), system);
+        val provider = new ChromeWebDriverProvider(system);
+        ogameWebConnector = new ChromeOgameWebConnector(user.getUniversum(), provider.webDriver());
     }
 
     @Override
